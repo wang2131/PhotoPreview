@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' file: data:; style-src 'self'" />
+  <title>图片预览播放器</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="toolbar">
+    <button id="btn-select" class="btn primary">📁 选择文件夹</button>
+    <div id="folder-path" class="folder-path" title="">未选择文件夹</div>
+    <div class="toolbar-right">
+      <span id="count-label" class="count-label"></span>
+      <button id="btn-play" class="btn play" disabled>▶ 全屏播放</button>
+    </div>
+  </header>
+
+  <main class="content">
+    <aside class="grid-pane">
+      <div id="grid" class="grid"></div>
+      <div id="empty-hint" class="empty-hint">
+        <p>点击左上角「选择文件夹」，列出其中的所有图片</p>
+        <p class="sub">支持 jpg / png / gif / webp / bmp / svg 等常见格式</p>
+      </div>
+    </aside>
+
+    <section class="preview-pane">
+      <div id="preview-box" class="preview-box">
+        <img id="preview-img" alt="" hidden />
+        <div id="preview-empty" class="preview-empty">点击左侧缩略图预览大图</div>
+      </div>
+      <div class="preview-bar">
+        <span id="preview-name"></span>
+        <span id="preview-index"></span>
+      </div>
+    </section>
+  </main>
+
+  <!-- 全屏播放层 -->
+  <div id="player" class="player" hidden>
+    <img id="player-img" alt="" />
+    <div id="player-topbar" class="player-topbar">
+      <span id="player-title"></span>
+      <span id="player-counter"></span>
+    </div>
+    <div id="player-controls" class="player-controls">
+      <button id="btn-prev" class="icon-btn" title="上一张 (←)">⏮</button>
+      <button id="btn-toggle" class="icon-btn big" title="播放/暂停 (空格)">⏸</button>
+      <button id="btn-next" class="icon-btn" title="下一张 (→)">⏭</button>
+      <div class="interval-box" title="自动切换间隔">
+        <label for="interval">间隔</label>
+        <input id="interval" type="range" min="1" max="15" step="1" value="3" />
+        <span id="interval-label">3s</span>
+      </div>
+      <button id="btn-exit" class="icon-btn" title="退出全屏 (Esc)">✕</button>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

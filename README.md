@@ -1,0 +1,45 @@
+# 图片预览播放器（Electron）
+
+一个桌面窗口程序：选择一个文件夹，列出并预览其中的所有图片，并可全屏自动播放（幻灯片）。
+
+## 运行
+
+```bash
+npm install
+npm start
+```
+
+> 若安装时报 `EPERM` 缓存目录错误，可先执行：
+> `export ELECTRON_CONFIG_CACHE="$PWD/.electron-cache"` 再 `npm install`。
+
+## 功能
+
+- **选择文件夹**：点击「📁 选择文件夹」弹出系统目录选择框
+- **缩略图列表**：左侧网格列出文件夹内所有图片（jpg / jpeg / png / gif / webp / bmp / svg / avif / ico / tif / tiff），按文件名自然排序
+- **大图预览**：单击缩略图在右侧预览；方向键 ← / → 切换
+- **全屏播放**：点击「▶ 全屏播放」或按 空格 / 回车 / F 进入全屏幻灯片：
+  - 自动切换，间隔 1–15 秒可调（底部滑杆）
+  - ⏮ / ⏭ 手动切换，⏸ / ▶ 暂停继续，点击画面也可暂停
+  - 鼠标不动 2.5 秒后自动隐藏播放界面
+  - Esc 或 ✕ 退出
+
+## 目录结构
+
+- `main.js` —— 主进程：窗口创建、文件夹选择对话框、图片扫描
+- `preload.js` —— 安全桥接（contextBridge 暴露 IPC）
+- `index.html` / `styles.css` / `renderer.js` —— 界面与交互逻辑
+- `示例图片/` —— 用于快速体验的测试图片
+
+## 打包成独立 App
+
+```bash
+npm run dist
+```
+
+产物在 `dist/mac-arm64/图片预览播放器.app`，复制到「应用程序」文件夹即可使用：
+
+```bash
+ditto "dist/mac-arm64/图片预览播放器.app" "/Applications/图片预览播放器.app"
+```
+
+> 应用未做代码签名（本地使用无影响）；若拷贝到其他 Mac，首次打开需右键 →「打开」。
