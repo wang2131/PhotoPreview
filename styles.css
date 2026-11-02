@@ -219,20 +219,53 @@ body {
   position: fixed;
   inset: 0;
   background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
   z-index: 999;
 }
 
 .player[hidden] { display: none; }
 
-.player img {
+/* 横屏图：单独铺满屏幕 */
+#player-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  transition: opacity 0.3s;
+  opacity: 0;
+  transition: opacity 0.35s ease;
 }
+
+#player-img.shown { opacity: 1; }
+
+#player-img[hidden] { display: none; }
+
+/* 竖图条带：横向拼接、整体位移 */
+.strip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  will-change: transform;
+}
+
+.strip[hidden] { display: none; }
+
+.strip.no-anim { transition: none; }
+
+.strip img {
+  height: 100%;
+  width: auto;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.strip img.shown { opacity: 1; }
 
 .player-topbar {
   position: absolute;
